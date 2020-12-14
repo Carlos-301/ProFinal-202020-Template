@@ -1,1 +1,2 @@
 En este directorio van los datos de prueba de los proyectos
+Resolvi el requierimiento 1 usando el TAD map ya que considero que es util para oranizar los datos y relativamente sencilla de obtener los datos.

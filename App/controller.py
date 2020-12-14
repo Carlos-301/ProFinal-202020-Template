@@ -25,7 +25,7 @@
  """
 
 import config as cf
-from App import model
+from App import model as mod
 import csv
 
 """
@@ -39,6 +39,13 @@ recae sobre el controlador.
 # ___________________________________________________
 #  Inicializacion del catalogo
 # ___________________________________________________
+def init():
+    """
+    Llama la funcion de inicializacion  del modelo.
+    """
+    # analyzer es utilizado para interactuar con el modelo
+    catalog = mod.TaxiInfo()
+    return catalog
 
 
 # ___________________________________________________
@@ -46,6 +53,40 @@ recae sobre el controlador.
 #  de datos en los modelos
 # ___________________________________________________
 
+
+def loadData(catalog, taxisfile):
+    """
+    Carga los datos de los archivos CSV en el modelo
+    """
+    taxisfile = cf.data_dir + taxisfile
+    input_file = csv.DictReader(open(taxisfile, encoding="utf-8"),delimiter=",")
+    for trip in input_file:
+        company=trip['company']
+        taxiId=trip['taxi_id']
+        if company == '':
+            company = "Independent Owner"
+
+        #mod.addtaxis(catalog,trip['taxi_id'])
+        mod.addcompany(catalog,company)
+        mod.addtaxi_to_company(catalog,company,taxiId)
+        mod.addtaxi(catalog,taxiId)
+    return catalog
+
 # ___________________________________________________
 #  Funciones para consultas
 # ___________________________________________________
+
+def totaltax(catalog):
+    return mod.totaltax(catalog)
+
+def totalcomp(catalog):
+    return mod.totalcomp(catalog)
+
+def totaltaxi(catalog):
+    return mod.totaltaxi(catalog)
+
+def topcompaniesByTaxis(catalog):
+    return mod.topcompaniesByTaxis(catalog)
+
+def topcompaniesByservices(catalog):
+    return mod.topcompaniesByservices(catalog)
